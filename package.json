@@ -24,5 +24,8 @@
   "devDependencies": {
     "nodemon": "^2.0.19",
     "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "adminjs": "^6.2.0"
   }
 }
