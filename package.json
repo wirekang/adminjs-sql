@@ -1,0 +1,28 @@
+{
+  "name": "adminjs-mysql",
+  "version": "0.0.0-development",
+  "description": "Mysql/MariaDB adapter for AdminJS",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon src/index.ts",
+    "test": "echo 'no tests yet'"
+  },
+  "keywords": [
+    "adminjs",
+    "adapter",
+    "mysql",
+    "mariadb"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "wirekang <wirekang@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wirekang/adminjs-mysql.git"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "rimraf": "^3.0.2"
+  }
+}
