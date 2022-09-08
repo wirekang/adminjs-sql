@@ -5,6 +5,7 @@ import { DatabaseInfo } from '../info/DatabaseInfo';
 import { ResourceInfo } from '../info/ResourceInfo';
 import { Client } from '../typing/Client';
 import { Parser } from '../typing/Parser';
+import { lowerCaseProperty } from '../utils/object';
 
 export const mysqlParser: Parser = {
   clients: ['mysql', 'mysql2'],
@@ -28,6 +29,7 @@ export const mysqlParser: Parser = {
     return new DatabaseInfo(connection.database, resourceMap);
   },
 };
+
 async function getTableNames(
   knex: Knex,
   databaseName: string
@@ -87,24 +89,24 @@ async function getProperties(
     .where('col.table_schema', databaseName)
     .where('col.table_name', tableName);
   const rows = await query;
-  return rows.map((row) => newProperty(row));
+  return rows.map((row) => newProperty(lowerCaseProperty(row)));
 }
 
 function newProperty(row: {
-  COLUMN_NAME: string;
-  ORDINAL_POSITION: number;
-  COLUMN_DEFAULT: string | null;
-  IS_NULLABLE: 'NO' | 'YES';
-  DATA_TYPE: string;
-  COLUMN_TYPE: string;
-  COLUMN_KEY: '' | 'PRI' | 'UNI' | 'MUL';
-  EXTRA: string;
-  COLUMN_COMMENT: string;
-  REFERENCED_TABLE_NAME: string | null;
-  REFERENCED_COLUMN_NAME: string | null;
+  column_name: string;
+  ordinal_position: number;
+  column_default: string | null;
+  is_nullable: 'NO' | 'YES';
+  data_type: string;
+  column_type: string;
+  column_key: string;
+  extra: string;
+  column_comment: string;
+  referenced_table_name: string | null;
+  referenced_column_name: string | null;
 }): Property {
-  const type = row.DATA_TYPE.toLowerCase();
-  const columnType = row.COLUMN_TYPE.toLowerCase();
+  const type = row.data_type.toLowerCase();
+  const columnType = row.column_type.toLowerCase();
   let availableValues: string[] | null = null;
   if (type === 'set' || type === 'enum') {
     if (!columnType.startsWith(type)) {
@@ -117,23 +119,24 @@ function newProperty(row: {
       .split("','");
   }
   const isSet = type === 'set';
-  const isReference = row.REFERENCED_TABLE_NAME && row.REFERENCED_TABLE_NAME;
-  const isId = row.COLUMN_KEY === 'PRI';
-  let isRequired = row.IS_NULLABLE === 'NO' && row.COLUMN_DEFAULT === null;
-  if (isId && row.EXTRA.toLowerCase() === 'auto_increment') {
+  const isReference = row.referenced_table_name && row.referenced_table_name;
+  const isId = row.column_key.toLowerCase() === 'pri';
+  let isRequired =
+    row.is_nullable.toLowerCase() === 'no' && row.column_default === null;
+  if (isId && row.extra.toLowerCase() === 'auto_increment') {
     isRequired = false;
   }
   return new Property(
-    row.COLUMN_NAME,
+    row.column_name,
     isId,
     true,
     true,
     availableValues,
     isRequired,
     isSet,
-    row.REFERENCED_TABLE_NAME,
-    row.REFERENCED_COLUMN_NAME,
-    row.ORDINAL_POSITION,
+    row.referenced_table_name,
+    row.referenced_column_name,
+    row.ordinal_position,
     isReference ? 'reference' : ensureType(type, columnType),
     isId,
     true
