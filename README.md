@@ -40,7 +40,11 @@ const adminJs = new AdminJS({
 });
 ```
 
-# Example App
+## ManyToOne
+
+This supports ManyToOne relationship if you define a foreign key.
+
+## Example App
 
 You can run [example app](https://github.com/wirekang/adminjs-sql/tree/main/example) with docker.
 
