@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "target": "ES6",
+    "module": "commonjs",
+    "target": "es2017",
     "lib": [
       "DOM",
       "ESNext"
@@ -12,9 +12,6 @@
     "strict": true,
     "strictBindCallApply": true,
     "strictNullChecks": true,
-    "declaration": true,
-    "declarationDir": "./lib",
-    "outDir": "./lib",
     "esModuleInterop": true,
   },
   "include": [
@@ -22,6 +19,5 @@
   ],
   "exclude": [
     "node_modules",
-    "lib"
   ]
 }

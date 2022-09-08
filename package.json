@@ -4,14 +4,16 @@
   "description": "Mysql/MariaDB adapter for AdminJS",
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc -w",
     "dev": "nodemon src/index.ts",
     "test": "echo 'no tests yet'"
   },
   "keywords": [
     "adminjs",
     "adapter",
-    "mysql",
-    "mariadb"
+    "mysql admin",
+    "mariadb admin",
+    "admin panel"
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,10 +24,14 @@
     "url": "https://github.com/wirekang/adminjs-mysql.git"
   },
   "devDependencies": {
+    "@types/node": "^18.7.15",
     "nodemon": "^2.0.19",
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "adminjs": "^6.2.0"
+    "adminjs": "^6.2.0",
+    "knex": "^2.3.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
   }
 }
