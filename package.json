@@ -1,12 +1,13 @@
 {
   "name": "adminjs-sql",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Raw SQL adapter for AdminJS without ORM",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
     "dev": "nodemon src/index.ts",
-    "test": "echo 'no tests yet'"
+    "test": "echo 'no tests yet'",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "adminjs",
@@ -26,7 +27,8 @@
   "devDependencies": {
     "@types/node": "^18.7.15",
     "nodemon": "^2.0.19",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "semantic-release": "^19.0.5"
   },
   "dependencies": {
     "adminjs": "^6.2.0",
