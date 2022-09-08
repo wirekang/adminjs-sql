@@ -93,8 +93,12 @@ yarn down
 
 - [x] MariaDB
 
-- [ ] Postgres (todo)
+## Todo
 
-## Contribution
+- [ ] Support Postgres.
 
-Contributions are welcome. Updating `README.md` are even more welcome.
+- [ ] Add unit testing.
+
+- [ ] Add more complex example app.
+
+Contributions are welcome!!
