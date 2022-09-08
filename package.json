@@ -1,7 +1,7 @@
 {
-  "name": "adminjs-mysql",
+  "name": "adminjs-raw",
   "version": "0.0.0-development",
-  "description": "Mysql/MariaDB adapter for AdminJS",
+  "description": "Raw SQL adapter for AdminJS without ORM",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
@@ -30,8 +30,6 @@
   },
   "dependencies": {
     "adminjs": "^6.2.0",
-    "knex": "^2.3.0",
-    "mysql": "^2.18.1",
-    "mysql2": "^2.3.3"
+    "knex": "^2.3.0"
   }
 }
