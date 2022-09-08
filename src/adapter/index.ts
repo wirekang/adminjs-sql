@@ -13,7 +13,7 @@ import { Resource } from './Resource';
  */
 export class Adapter {
   /**
-   * You don't need to access this property. Looking for {@link Adapter.database}?
+   * You don't need to access this property. Looking for {@link Adapter.init}?
    */
   public static Database: any = Database;
   public static Resource: any = Resource;
@@ -25,14 +25,14 @@ export class Adapter {
    * @param client sql driver name.
    * @param connection connectionOptions.
    * @example
-   * const database = await Adapter.database('mysql2', {
+   * const database = await Adapter.init('mysql2', {
    *    host: DB_HOST,
    *    user: DB_USER,
    *    password: DB_PASSWORD,
    *    database: DB_DATABASE,
    *  })
    */
-  public static async database(
+  public static async init(
     client: Client,
     connection: ConnectionOptions
   ): Promise<DatabaseInfo> {

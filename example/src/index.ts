@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = express();
   AdminJS.registerAdapter(Adapter);
 
-  const database = await Adapter.database('mysql2', {
+  const database = await Adapter.init('mysql2', {
     host: DB_HOST,
     port: DB_PORT,
     user: DB_USER,

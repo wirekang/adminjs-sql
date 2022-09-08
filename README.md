@@ -15,12 +15,12 @@ import AdminJS from 'adminjs';
 AdminJS.registerAdapter(Adapter);
 ```
 
-After registration, you should call `Adapter.database(client, connectionOptions)` to parse table information from running database.
+After registration, you should call `Adapter.init(client, connectionOptions)` to parse table information from running database.
 
 ```typescript
 // import { Adapter } from 'adminjs-sql';
 // ...
-const db = await Adapter.database('mysql2', {
+const db = await Adapter.init('mysql2', {
   host: DB_HOST,
   port: DB_PORT,
   user: DB_USER,
