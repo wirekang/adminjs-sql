@@ -1,4 +1,4 @@
-export type ConnectionOptions = MySqlConnectionConfig;
+export type ConnectionOptions = MySqlConnectionConfig & { database: string };
 
 // types from 'knex'
 interface MariaSslConfiguration {

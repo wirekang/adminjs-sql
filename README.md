@@ -1,29 +1,48 @@
 # adminjs-sql
 
-This is an [AdminJS](https://github.com/SoftwareBrothers/adminjs) adapter which integrates Raw SQL into AdminJS.
+This is an inofficial [AdminJS](https://github.com/SoftwareBrothers/adminjs) adapter which integrates SQL-based database into AdminJS.
 
-# Installation
+Installation: `yarn add adminjs-sql`
 
-```
-yarn add adminjs-sql
-
-npm install adminjs-sql
-```
-
-# Usage
+## Usage
 
 The plugin can be registered using standard `AdminJS.registerAdapter` method.
 
 ```typescript
-import { Adapter } from 'adminjs-mysql';
+import { Adapter } from 'adminjs-sql';
 import AdminJS from 'adminjs';
 
 AdminJS.registerAdapter(Adapter);
 ```
 
-# Example
+After registration, you should call `Adapter.database(client, connectionOptions)` to parse table information from running database.
 
-You can run [example package](https://github.com/wirekang/adminjs-sql/tree/main/example) with docker.
+```typescript
+// import { Adapter } from 'adminjs-sql';
+// ...
+const db = await Adapter.database('mysql2', {
+  host: DB_HOST,
+  port: DB_PORT,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
+});
+```
+
+After initialization, you can register resources. `db.tables()` to register ALL tables in database. Or you can `db.table(tableName)` to register specific table.
+
+```typescript
+const adminJs = new AdminJS({
+  databases: [database],
+  resources: db.tables(),
+  // or
+  resources: [db.table('users'), db.table('posts'), db.table('comments')],
+});
+```
+
+# Example App
+
+You can run [example app](https://github.com/wirekang/adminjs-sql/tree/main/example) with docker.
 
 1. Clone this repository.
 
@@ -43,19 +62,19 @@ yarn install
 3. Run mysql:latest in docker container. Checkout [docker-compose.yml](https://github.com/wirekang/adminjs-sql/blob/main/example/docker-compose.yml)
 
 ```
-   yarn up
+yarn up
 
 ```
 
 4. Run example app.
 
 ```
-	yarn start
+yarn start
 
 
-	Generating samples...
-    Inserting samples...
-	adminjs-sql example app is under http://localhost:33300
+# Generating samples...
+# Inserting samples...
+# adminjs-sql example app is under http://localhost:33300
 ```
 
 5. After enjoying the example, you can clean down MySQL server.
@@ -63,3 +82,13 @@ yarn install
 ```
 yarn down
 ```
+
+## How It Works
+
+`adminjs-sql` collects information about tables and columns from [INFORMATION_SCHEMA](https://dev.mysql.com/doc/refman/8.0/en/information-schema-introduction.html) and converts to `adminjs`. `adminjs-sql` uses [Knex Query Builder](https://knexjs.org) to generate SQL string.
+
+## Support databases
+
+- [x]MySQL
+- [x]MariaDB
+- [ ]Postgres

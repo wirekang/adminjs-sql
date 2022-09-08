@@ -20,7 +20,7 @@ async function bootstrap() {
 
   const adminJs = new AdminJS({
     databases: [database],
-    resources: [...database.tables()],
+    resources: database.tables(),
     rootPath: '/',
   });
 
