@@ -1,5 +1,5 @@
 {
-  "name": "adminjs-raw",
+  "name": "adminjs-sql",
   "version": "0.0.0-development",
   "description": "Raw SQL adapter for AdminJS without ORM",
   "scripts": {
@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wirekang/adminjs-mysql.git"
+    "url": "https://github.com/wirekang/adminjs-sql.git"
   },
   "devDependencies": {
     "@types/node": "^18.7.15",
@@ -31,5 +31,9 @@
   "dependencies": {
     "adminjs": "^6.2.0",
     "knex": "^2.3.0"
+  },
+  "peerDependencies": {
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
   }
 }

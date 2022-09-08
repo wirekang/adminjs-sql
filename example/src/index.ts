@@ -1,7 +1,7 @@
 import AdminJS from 'adminjs';
 import AdminJSExpress from '@adminjs/express';
 import express from 'express';
-import { Adapter } from 'adminjs-mysql';
+import { Adapter } from 'adminjs-sql';
 import { initDb } from './initDb';
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from './consts';
 
@@ -27,7 +27,7 @@ async function bootstrap() {
   const router = AdminJSExpress.buildRouter(adminJs);
   app.use(adminJs.options.rootPath, router);
   app.listen(33300, () =>
-    console.log('adminjs-mysql example app is under http://localhost:33300')
+    console.log('adminjs-sql example app is under http://localhost:33300')
   );
 }
 

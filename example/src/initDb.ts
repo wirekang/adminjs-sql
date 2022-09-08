@@ -12,7 +12,7 @@ export async function initDb() {
     port: DB_PORT,
   });
 
-  console.log('Inserting fake data...');
+  console.log('Inserting samples...');
   const queries = initSql.split(';');
   queries.pop();
   for (let i = 0; i < queries.length; i += 1) {
@@ -49,6 +49,7 @@ type Post = {
   content?: string;
 };
 
+console.log('Generating samples...');
 const users: User[] = [];
 for (let i = 0; i < userCount; i += 1) {
   const name = faker.name.fullName();

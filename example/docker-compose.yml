@@ -1,9 +1,9 @@
 version: '3'
-name: adminjs-mysql-example
+name: adminjs-sql-example
 services:
   db:
     image: mysql:latest
-    container_name: adminjs-mysql-example-db
+    container_name: adminjs-sql-example-db
     ports:
       - 33301:3306
     environment:
