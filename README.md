@@ -85,10 +85,16 @@ yarn down
 
 ## How It Works
 
-`adminjs-sql` collects information about tables and columns from [INFORMATION_SCHEMA](https://dev.mysql.com/doc/refman/8.0/en/information-schema-introduction.html) and converts to `adminjs`. `adminjs-sql` uses [Knex Query Builder](https://knexjs.org) to generate SQL string.
+`adminjs-sql` collects information about tables and columns from [INFORMATION_SCHEMA](https://dev.mysql.com/doc/refman/8.0/en/information-schema-introduction.html) and converts to `adminjs`. This project uses [Knex Query Builder](https://knexjs.org) to generate SQL string.
 
-## Support databases
+## Supported Databases
 
-- [x]MySQL
-- [x]MariaDB
-- [ ]Postgres
+- [x] MySQL
+
+- [x] MariaDB
+
+- [ ] Postgres (todo)
+
+## Contribution
+
+Contributions are welcome. Updating `README.md` are even more welcome.
