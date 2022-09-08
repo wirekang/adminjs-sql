@@ -16,6 +16,10 @@ export class Adapter {
    * You don't need to access this property. Looking for {@link Adapter.init}?
    */
   public static Database: any = Database;
+
+  /**
+   * You don't need to access this property. Looking for {@link Adapter.init}?
+   */
   public static Resource: any = Resource;
   private constructor() {}
 
