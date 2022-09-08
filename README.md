@@ -89,9 +89,8 @@ yarn down
 
 ## Supported Databases
 
-- [x] MySQL
-
-- [x] MariaDB
+- MySQL
+- MariaDB
 
 ## Todo
 
