@@ -1,15 +1,22 @@
-import { BaseDatabase, BaseResource } from 'adminjs';
+import type { Knex } from 'knex';
 import { DatabaseInfo } from '../info/DatabaseInfo';
 import { parse } from '../parser';
 import { Client } from '../typing/Client';
 import { ConnectionOptions } from '../typing/ConnectionOptions';
 import { Database } from './Database';
 import { Resource } from './Resource';
-import type { Knex } from 'knex';
 
+/**
+ * @example
+ * import { Adapter } from 'adminjs-sql';
+ * AdminJS.registerAdapter(Adapter);
+ */
 export class Adapter {
-  public static Database: typeof BaseDatabase = Database as any;
-  public static Resource: typeof BaseResource = Resource as any;
+  /**
+   * You don't need to access this property. Looking for {@link Adapter.database}?
+   */
+  public static Database: any = Database;
+  public static Resource: any = Resource;
   private constructor() {}
 
   /**
