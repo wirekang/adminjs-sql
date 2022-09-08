@@ -1,7 +1,5 @@
-import { BaseDatabase, PropertyType } from 'adminjs';
-import { Knex } from 'knex';
+import { BaseDatabase } from 'adminjs';
 import { DatabaseInfo } from '../info/DatabaseInfo';
-import { Property } from './Property';
 import { Resource } from './Resource';
 
 export class Database extends BaseDatabase {

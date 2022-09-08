@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@adminjs/express": "^5.0.0",
+    "@faker-js/faker": "^7.5.0",
     "adminjs": "^6.2.0",
     "adminjs-mysql": "link:../",
     "express": "^4.18.1",

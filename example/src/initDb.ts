@@ -1,8 +1,9 @@
+import { faker } from '@faker-js/faker';
 import mysql from 'mysql2/promise';
 import { DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from './consts';
 
 /**
- * Initialize database, tables for example environment.
+ * Initialize database, tables for example.
  */
 export async function initDb() {
   const c = await mysql.createConnection({
@@ -11,51 +12,66 @@ export async function initDb() {
     port: DB_PORT,
   });
 
-  await Promise.all(sql.split(';').map((s) => c.query(s)));
+  console.log('Inserting fake data...');
+  const queries = initSql.split(';');
+  queries.pop();
+  for (let i = 0; i < queries.length; i += 1) {
+    await c.query(queries[i]);
+  }
+
+  for (let i = 0; i < users.length; i += 1) {
+    const user = users[i];
+    await c.query(`
+        INSERT INTO \`users\` (\`name\`,\`age\`) VALUES(${mysql.escape(
+          user.name
+        )}, ${mysql.escape(user.age)})
+    `);
+
+    for (let j = 0; j < user.posts.length; j += 1) {
+      const post = user.posts[j];
+      await c.query(`
+        INSERT INTO \`posts\` (\`author_id\`, \`title\`, \`content\`) VALUES
+        (${mysql.escape(i + 1)}, ${mysql.escape(post.title)}, ${mysql.escape(
+        post.content
+      )})
+      `);
+    }
+  }
 }
 
-const sql = `
+const userCount = 13;
+const maxPostCount = 30;
+
+type User = { name: string; age: number; posts: Post[] };
+
+type Post = {
+  title: string;
+  content?: string;
+};
+
+const users: User[] = [];
+for (let i = 0; i < userCount; i += 1) {
+  const name = faker.name.fullName();
+  const age = randomInt(100);
+  const posts: Post[] = [];
+  const max = randomInt(maxPostCount);
+  for (let j = 0; j < max; j += 1) {
+    posts.push({
+      title: faker.lorem.sentences(1),
+      content: faker.lorem.sentences(),
+    });
+  }
+  users.push({ name, age, posts });
+}
+
+function randomInt(max: number): number {
+  return Math.round(Math.random() * max);
+}
+
+const initSql = `
   DROP DATABASE IF EXISTS \`${DB_NAME}\`;
   CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
   USE \`${DB_NAME}\`;
-
-  CREATE TABLE string_table (
-    col_char char(100),
-    col_varchar varchar(444) not null,
-    col_binary binary(200) null,
-    col_varbinary varbinary(10) default '1234',
-    col_tinyblob tinyblob null,
-    col_tinytext tinytext not null,
-    col_text text(100),
-    col_mediumtext mediumtext,
-    col_longtext longtext,
-    col_enum enum('coffee', 'beer', 'soju', 'water', 'milk') not null default 'water',
-    col_set set('coffee', 'beer', 'soju', 'water', 'milk') not null default 'water,milk'
-  );
-
-  CREATE TABLE numeric_table (
-    id int primary key auto_increment,
-    col_bit bit(30),
-    col_tinyint tinyint,
-    col_bool bool,
-    col_boolean boolean,
-    col_smallint smallint default 0,
-    col_mediumint mediumint,
-    col_int int null,
-    col_integer integer not null default 123,
-    col_bigint bigint,
-    col_float float,
-    col_double double,
-    col_decimal decimal,
-    col_dec dec
-  );
-
-  CREATE TABLE data_table (
-    col_date date null,
-    col_datetime datetime,
-    col_timestamp timestamp default CURRENT_TIMESTAMP,
-    col_year year default '2022'
-  );
 
   CREATE TABLE users (
     id int primary key auto_increment,
@@ -70,6 +86,6 @@ const sql = `
     content text null default NULL,
 
     foreign key (author_id)
-      references users(id) on update cascade
-  )
+      references users(id) on update cascade on delete cascade
+  );
 `;

@@ -5,7 +5,9 @@ import {
   ParamsType,
   SupportedDatabasesType,
 } from 'adminjs';
+import { Knex } from 'knex';
 import { ResourceInfo } from '../info/ResourceInfo';
+import { undefinedToNull } from '../utils/object';
 import { Property } from './Property';
 
 export class Resource extends BaseResource {
@@ -21,12 +23,26 @@ export class Resource extends BaseResource {
     return r;
   }
 
-  constructor(private readonly info: ResourceInfo) {
+  private knex: Knex;
+  private propertyMap = new Map<string, Property>();
+  private tableName: string;
+  private _databaseName: string;
+  private _properties: Property[];
+  private idColumn: string;
+  constructor(info: ResourceInfo) {
     super(info.tableName);
+    this.knex = info.knex;
+    this.tableName = info.tableName;
+    this._databaseName = info.databaseName;
+    this._properties = info.properties;
+    this._properties.forEach((p) => {
+      this.propertyMap.set(p.path(), p);
+    });
+    this.idColumn = info.idProperty.columnName;
   }
 
   override databaseName(): string {
-    return this.info.databaseName;
+    return this._databaseName;
   }
 
   override databaseType(): SupportedDatabasesType | string {
@@ -34,20 +50,20 @@ export class Resource extends BaseResource {
   }
 
   override id(): string {
-    return this.info.tableName;
+    return this.tableName;
   }
 
   override properties(): Property[] {
-    return this.info.properties;
+    return this._properties;
   }
 
   override property(path: string): Property | null {
-    return this.info.properties.find((v) => v.path() === path) ?? null;
+    return this.propertyMap.get(path) ?? null;
   }
 
   override async count(filter: Filter): Promise<number> {
-    console.log('count', filter);
-    return 0;
+    const [r] = await this.filterQuery(filter).count('* as cnt');
+    return r.cnt;
   }
 
   override async find(
@@ -61,38 +77,74 @@ export class Resource extends BaseResource {
       };
     }
   ): Promise<BaseRecord[]> {
-    return [];
+    const query = this.filterQuery(filter);
+    if (options.limit) {
+      query.limit(options.limit);
+    }
+    if (options.offset) {
+      query.offset(options.offset);
+    }
+    if (options.sort?.sortBy) {
+      query.orderBy(options.sort.sortBy, options.sort.direction);
+    }
+    const rows: any[] = await query;
+    return rows.map((row) => new BaseRecord(row, this));
   }
 
   override async findOne(id: string): Promise<BaseRecord | null> {
-    console.log('findOne', id);
-    return null;
+    const res = await this.knex(this.tableName).where(this.idColumn, id);
+    return res[0] ? this.build(res[0]) : null;
   }
 
   override async findMany(ids: (string | number)[]): Promise<BaseRecord[]> {
-    console.log('findMany', ids);
-    return [];
+    const res = await this.knex(this.tableName).whereIn(this.idColumn, ids);
+    return res.map((r) => this.build(r));
   }
 
   override build(params: Record<string, any>): BaseRecord {
-    console.log('build', params);
     return new BaseRecord(params, this);
   }
 
   override async create(params: Record<string, any>): Promise<ParamsType> {
-    console.log('create', params);
-    return params;
+    const [id] = await this.knex(this.tableName).insert(
+      undefinedToNull(params)
+    );
+    const [row] = await this.knex(this.tableName).where(this.idColumn, id);
+    return row;
   }
 
   override async update(
     id: string,
     params: Record<string, any>
   ): Promise<ParamsType> {
-    console.log('update', id, params);
-    return params;
+    await this.knex
+      .from(this.tableName)
+      .update(undefinedToNull(params))
+      .where(this.idColumn, id);
+    const [row] = await this.knex(this.tableName).where(this.idColumn, id);
+    return row;
   }
 
   override async delete(id: string): Promise<void> {
-    console.log('delete', id);
+    await this.knex.from(this.tableName).delete().where(this.idColumn, id);
+  }
+
+  private filterQuery(filter: Filter | undefined): Knex.QueryBuilder {
+    const q = this.knex(this.tableName);
+    if (!filter) {
+      return q;
+    }
+
+    const { filters } = filter;
+
+    Object.entries(filters ?? {}).forEach(([key, filter]) => {
+      if (typeof filter.value === 'object') {
+        q.whereBetween(key, [filter.value.from, filter.value.to]);
+      } else {
+        q.where(key, filter.value);
+      }
+    });
+
+    return q;
   }
 }
