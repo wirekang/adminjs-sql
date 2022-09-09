@@ -36,6 +36,11 @@ async function getTableNames(
 ): Promise<string[]> {
   const query = await knex.raw(`show tables from \`${databaseName}\``);
   const [res] = await query;
+  if (!res) {
+    console.warn(`no tables in database ${databaseName}`);
+    return [];
+  }
+
   const key = Object.keys(res[0])[0];
   return res.map((r: any) => r[key]);
 }
