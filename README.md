@@ -87,6 +87,16 @@ yarn start
 yarn down
 ```
 
+## Testing
+
+We use docker compose to run various databases for testing.
+
+`yarn test:up # docker compose up -d`
+
+`yarn test`
+
+`yarn test:down # docker compose down`
+
 ## How It Works
 
 `adminjs-sql` collects information about tables and columns from [INFORMATION_SCHEMA](https://dev.mysql.com/doc/refman/8.0/en/information-schema-introduction.html) and converts to `adminjs`. This project uses [Knex Query Builder](https://knexjs.org) to generate SQL string.
@@ -100,7 +110,7 @@ yarn down
 
 - [ ] Support Postgres.
 
-- [ ] Add unit testing.
+- [ ] Elaborate unit testing.
 
 - [ ] Add more complex example app.
 
