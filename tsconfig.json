@@ -4,7 +4,7 @@
     "target": "ES6",
     "lib": [
       "DOM",
-      "ESNext"
+      "ESNext",
     ],
     "skipLibCheck": true,
     "sourceMap": true,
