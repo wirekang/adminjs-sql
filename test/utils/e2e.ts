@@ -7,24 +7,6 @@ export interface ITest {
   init: (db: string) => Promise<DatabaseInfo>;
 }
 
-interface Schema {
-  databases: DatabaseSchema[];
-}
-
-interface DatabaseSchema {
-  name: string;
-  tables: TableSchema[];
-}
-
-interface TableSchema {
-  name: string;
-  columns: ColumnSchema[];
-}
-
-interface ColumnSchema {
-  name: string;
-}
-
 export function initMysql(): ITest {
   return init('mysql2', {
     host: 'localhost',
