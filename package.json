@@ -6,7 +6,9 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "dev": "nodemon src/index.ts",
+    "test:up": "cd ./test && docker compose up -d",
     "test": "jest -runInBand",
+    "test:down": "cd ./test && docker compose down",
     "semantic-release": "semantic-release"
   },
   "keywords": [
