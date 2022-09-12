@@ -33,7 +33,7 @@ After initialization, you can register resources. `db.tables()` to register ALL 
 
 ```typescript
 const adminJs = new AdminJS({
-  databases: [database],
+  databases: [db],
   resources: db.tables(),
   // or
   resources: [db.table('users'), db.table('posts'), db.table('comments')],
