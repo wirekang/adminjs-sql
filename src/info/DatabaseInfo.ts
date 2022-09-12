@@ -1,4 +1,5 @@
 import type AdminJS from 'adminjs';
+import { Knex } from 'knex';
 import { ResourceInfo } from './ResourceInfo';
 
 /**

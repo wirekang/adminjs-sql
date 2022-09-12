@@ -25,6 +25,7 @@ export const mysqlParser: Parser = {
     resources.forEach((r) => {
       resourceMap.set(r.tableName, r);
     });
+    await knex.destroy();
 
     return new DatabaseInfo(connection.database, resourceMap);
   },
