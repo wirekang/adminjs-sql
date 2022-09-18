@@ -1,4 +1,4 @@
-# adminjs-sql [![NPM version](https://img.shields.io/npm/v/adminjs-sql?style=flat-square)](https://npmjs.org/package/adminjs-sql)
+# [adminjs-sql](https://github.com/wirekang/adminjs-sql) [![NPM version](https://img.shields.io/npm/v/adminjs-sql?style=flat-square)](https://npmjs.org/package/adminjs-sql)
 
 This is an inofficial [AdminJS](https://github.com/SoftwareBrothers/adminjs) adapter which integrates SQL-based database into AdminJS.
 
