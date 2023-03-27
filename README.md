@@ -4,6 +4,9 @@ This is an inofficial [AdminJS](https://github.com/SoftwareBrothers/adminjs) ada
 
 Installation: `yarn add adminjs-sql`
 
+### Checkout [official @adminjs/sql](https://github.com/SoftwareBrothers/adminjs-sql) for postgres.
+This repository will be archived when they support mysql.
+
 ## Usage
 
 The plugin can be registered using standard `AdminJS.registerAdapter` method.
