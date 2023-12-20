@@ -1,11 +1,14 @@
+# Checkout [official @adminjs/sql](https://github.com/SoftwareBrothers/adminjs-sql) for Postgres.
+# This repository will be archived when the official adapter supports Mysql and Mariadb.
+
+---
+
 # [adminjs-sql](https://github.com/wirekang/adminjs-sql) [![NPM version](https://img.shields.io/npm/v/adminjs-sql?style=flat-square)](https://npmjs.org/package/adminjs-sql)
 
-This is an inofficial [AdminJS](https://github.com/SoftwareBrothers/adminjs) adapter which integrates SQL-based database into AdminJS.
+This is an unofficial [AdminJS](https://github.com/SoftwareBrothers/adminjs) adapter which integrates SQL-based database into AdminJS.
 
 Installation: `yarn add adminjs-sql`
 
-### Checkout [official @adminjs/sql](https://github.com/SoftwareBrothers/adminjs-sql) for postgres.
-This repository will be archived when they support mysql.
 
 ## Usage
 
@@ -108,13 +111,3 @@ We use docker compose to run various databases for testing.
 
 - MySQL
 - MariaDB
-
-## Todo
-
-- [ ] Support Postgres.
-
-- [ ] Elaborate unit testing.
-
-- [ ] Add more complex example app.
-
-Contributions are welcome!!
